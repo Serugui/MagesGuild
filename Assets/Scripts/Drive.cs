@@ -17,9 +17,13 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
     //float rawDamage = 10f;
 
 
+
     Vector3 forward, right, rotationTarget;
     Vector2 mouseLook, joystickLook;
     bool fireInput;
+    bool fireInput1;
+
+    public PlayerWeapon playerWeapon;
 
     // Variable to store ongoing movement input
     private Vector2 movementInput;
@@ -62,7 +66,15 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
             }
             
         }
-        //FireWeapon();
+        if (fireInput)
+        {
+            playerWeapon.SwitchToAttack1();
+        }
+        else if (fireInput1)
+        {
+            playerWeapon.SwitchToAttack2();
+        }
+        FireWeapon();
     }
 
     void Locomotion()
@@ -114,13 +126,12 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
 
     }
 
-    //void FireWeapon()
-    //{
-        //if (fireInput)
-        //{
-
-            //PlayerGun.Instance.Shoot();
-
+    void FireWeapon()
+    {
+        if (fireInput || fireInput1)
+       {
+            PlayerWeapon.Instance.Shoot();
+            
 
             // Get the center of the character controller as the starting point for the ray
             //Vector3 rayOrigin = controller.bounds.center;
@@ -144,8 +155,10 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
 
             //fireInput = false;
 
-        //}
-    //}
+        }
+    }
+
+   
 
         public void OnMove(InputAction.CallbackContext context)
     {
@@ -168,5 +181,10 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
     public void OnFire(InputAction.CallbackContext context)
     {
         fireInput = context.ReadValueAsButton();
+    }
+
+    public void OnFire1(InputAction.CallbackContext context)
+    {
+        fireInput1 = context.ReadValueAsButton();
     }
 }

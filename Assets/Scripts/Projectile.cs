@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class Projectile : MonoBehaviour
 {
     private ParticleSystem pSys;
-    public int rawDamage = 10;
+    [SerializeField]
+    public static int rawDamage = 10;
     
 
     private void Start()
@@ -17,11 +18,31 @@ public class Projectile : MonoBehaviour
 
     }
 
-    private void OnParticleCollision(GameObject other)
+    private void CollisionEnter(Collider col)
     {
-        if (other.tag == "Enemy")
+        Debug.Log("Collided");
+
+        if (col.gameObject.tag == "Enemy")
         {
-            other.SendMessageUpwards("Hit", rawDamage, SendMessageOptions.DontRequireReceiver);
+            // Apply damage to the enemy
+            col.SendMessageUpwards("Hit", rawDamage, SendMessageOptions.DontRequireReceiver);
+
+            // Destroy the bullet on trigger
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
+    //private void OnParticleCollision(GameObject other)
+    //{
+        //Debug.Log("Particle collided with: " + other.name);
+
+        //if (other.tag == "Enemy")
+        //{
+            //Debug.Log("Hit enemy");
+            //other.SendMessageUpwards("Hit", rawDamage, SendMessageOptions.DontRequireReceiver);
+       // }
+    //}
 }

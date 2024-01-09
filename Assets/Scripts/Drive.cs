@@ -22,6 +22,7 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
     Vector2 mouseLook, joystickLook;
     bool fireInput;
     bool fireInput1;
+    public static bool pauseInput;
 
     public PlayerWeapon playerWeapon;
 
@@ -186,5 +187,11 @@ public class Drive : MonoBehaviour, Controls.IPlayerActions
     public void OnFire1(InputAction.CallbackContext context)
     {
         fireInput1 = context.ReadValueAsButton();
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        pauseInput = context.ReadValueAsButton();
+
     }
 }
